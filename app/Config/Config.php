@@ -4,4 +4,4 @@ namespace App\Config;
 
 use App\Kernel;
 
-$app = new
+$app = new Kernel(__DIR__);
