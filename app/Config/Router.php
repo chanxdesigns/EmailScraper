@@ -8,8 +8,12 @@ class Router extends Routes {
 
     public function __construct () {
         foreach ($this->routes as $uri => $uriProps) {
-            $namespace = "App\Controllers";
-            call_user_func_array($uriProps);
+            $namespace = "\App\Controllers\'";
+            $className = $this->getControllerClassMethod($uriProps['controller'])['class'];
+            $methodName = $this->getControllerClassMethod($uriProps['controller'])['method'];
+            $routeController = new $namespace.$className();
+
+            return call_user_func_array($routeController->$methodName(), $uriProps['params']);
         }
     }
 
