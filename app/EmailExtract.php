@@ -4,9 +4,7 @@ namespace App;
 
 use App\Database\DB;
 
-require 'vendor/autoload.php';
-
-class EmailExtract {
+class EmailExtract extends Kernel {
 
     // Store the directory name to be extracted
     protected static $directory;
