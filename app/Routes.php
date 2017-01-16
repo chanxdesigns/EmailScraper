@@ -7,11 +7,14 @@ namespace App;
  */
 class Routes {
 
+    // The Base Directory
+    protected $baseDir = "/EmailScraper";
+
     // The Key is the Route URI
     protected $routes = array(
-        "/" => array(
+        "/esomar" => array(
             "method" => "GET",
-            "controller" => "Makeshift@showName"
+            "controller" => "EmailExtract@extractEmail"
         )
     );
 

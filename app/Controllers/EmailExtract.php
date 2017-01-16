@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Controllers;
 
 use App\Database\DB;
+use App\Kernel;
 
 class EmailExtract extends Kernel {
 
@@ -16,9 +17,11 @@ class EmailExtract extends Kernel {
      * @return \ArrayObject
      */
     public function __construct() {
+        var_dump("Yo Man Executed");
 
     }
     private static function extractEmail () {
+        var_dump("Extractor Func");
         if (self::$directory) {
             // Get the directory Url
             $query = "SELECT directory_url FROM mailing_extract.directories WHERE directory_id = ?";
