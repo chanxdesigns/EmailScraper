@@ -2,42 +2,14 @@
 
 namespace App\Config;
 
-use App\Routes;
+class Router {
 
-class Router extends Routes {
+    protected $baseDir = "";
 
-    public function __construct () {
-//        foreach ($this->routes as $uri => $uriProps) {
-//            $namespace = "\App\Controllers\'";
-//            $className = $this->getControllerClassMethod($uriProps['controller'])['class'];
-//            $methodName = $this->getControllerClassMethod($uriProps['controller'])['method'];
-//
-//            $routeController = new $namespace.$className();
-//
-//            return call_user_func_array($routeController->$methodName, $uriProps['params']);
-//        }
+    protected $routes = array();
 
-//        if (array_key_exists($this->getUri(), $this->routes)) {
-//            $this->performRouting();
-//        }
-//        else {
-//            http_response_code(404);
-//            echo "Route Doesn't exist";
-//        }
-
-        try {
-            if (array_key_exists($this->getUri(), $this->routes)) {
-                $this->performRouting();
-            }
-            else {
-                throw new \Error("Route Doesn't Exist",404);
-            }
-        }
-        catch (\Error $err) {
-            if ($err->getCode() == 404) {
-                die('Route Not Found');
-            }
-        }
+    public function __construct ($baseDir = "") {
+        $this->baseDir = $baseDir;
     }
 
     private function getControllerClassMethod ($controllerMethod) {
@@ -53,9 +25,51 @@ class Router extends Routes {
         return $currUri = str_replace($baseDir, '', $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
     }
 
-    private function performRouting () {
-        var_dump($this->routes[$this->getUri()]['method']);
-        if ($_SERVER['REQUEST_METHOD'] == $this->routes[$this->getUri()]);
+    public function route ($uri, $method, $controller) {
+        array_push($this->routes, array(
+            "uri" => $uri,
+            "method" => $method,
+            "controller" => $controller
+        ));
+//
+    }
+
+//    public function makeSingleDimensionalArray ($multiArray) {
+//        foreach ($multiArray as $array) {
+//            $newArr = array(
+//              "uri" =>
+//            );
+//        }
+//    }
+
+    public function dispatch() {
+        $routes = array();
+
+        foreach ($this->routes as $routeProps) {
+
+            array_push($routes,$routeProps['uri']);
+
+            if ($this->getUri() == $routeProps['uri']) {
+
+                $controller = new ControllerResolver();
+                $controller->resolveController(
+                    $this->getControllerClassMethod($routeProps['controller'])['class'],
+                    $this->getControllerClassMethod($routeProps['controller'])['method']
+                    );
+
+            }
+        }
+
+        try {
+            if (!in_array($this->getUri(), $routes)) {
+                throw new \ErrorException("Route Doesn't Exists", 404);
+            }
+        }
+        catch (\ErrorException $err) {
+            http_response_code($err->getCode());
+            echo $err->getMessage();
+            exit();
+        }
     }
 
 }

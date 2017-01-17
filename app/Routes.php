@@ -2,20 +2,20 @@
 
 namespace App;
 
+use App\Config\Router;
+
+/**
+ * Initialise Router
+ */
+$route = new Router('/Email_Scraper');
+
 /**
  * Specify App Routes
  */
-class Routes {
+$route->route('/esomar', 'GET', 'EmailExtract@extractEmail');
+$route->route('/greenbook', 'GET', 'EmailExtract@extractC');
 
-    // The Base Directory
-    protected $baseDir = "/EmailScraper";
-
-    // The Key is the Route URI
-    protected $routes = array(
-        "/esomar" => array(
-            "method" => "GET",
-            "controller" => "EmailExtract@extractEmail"
-        )
-    );
-
-}
+/**
+ * Make the routes accessible
+ */
+$route->dispatch();
