@@ -3,9 +3,10 @@
     "description": "email_scraper",
     "require": {
         "guzzlehttp/guzzle": "^6.2",
-        "fabpot/goutte": "^3.2",
         "nesbot/carbon": "^1.21",
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+        "fabpot/goutte": "^3.2",
+        "paquettg/php-html-parser": "^1.7"
     },
     "autoload": {
         "psr-4": {"App\\": "app"}

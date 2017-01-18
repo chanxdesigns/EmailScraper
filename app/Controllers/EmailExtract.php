@@ -3,27 +3,34 @@
 namespace App\Controllers;
 
 use App\Config\ControllerResolver;
-use App\Database\DB;
+use Goutte\Client;
+use PHPHtmlParser\Dom;
 
 class EmailExtract extends ControllerResolver {
-
-    // Store the directory name to be extracted
-    protected static $directory;
-
     /**
      * The E-Mail extractor function
      *
      * @throws \ErrorException
      */
+    public function extractEsomar() {
 
-    public function __construct(DB $n) {
+        $scrapper = new Dom();
+        $scrapper->loadFromUrl('https://directory.esomar.org');
+        $europe = $scrapper->find('#location_europe .list-countries li');
+        //$n = $europe->nextChild();
+
+        $a = 0;
+        foreach ($europe as $country) {
+            $n = $country->find('li a')->getAttribute('href');
+            $a++;
+        }
+        var_dump($a);
+
 
     }
-    public function extractEmail () {
-        return $this->view(dirname(__DIR__).'/view/name.html');
+
+    public function makeMeHappy () {
+        $this->view('Yeah');
     }
 
-    public function extractC () {
-        echo "<h3>Dude</h3>";
-    }
 }

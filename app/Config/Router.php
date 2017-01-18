@@ -31,16 +31,7 @@ class Router {
             "method" => $method,
             "controller" => $controller
         ));
-//
     }
-
-//    public function makeSingleDimensionalArray ($multiArray) {
-//        foreach ($multiArray as $array) {
-//            $newArr = array(
-//              "uri" =>
-//            );
-//        }
-//    }
 
     public function dispatch() {
         $routes = array();
@@ -51,8 +42,8 @@ class Router {
 
             if ($this->getUri() == $routeProps['uri']) {
 
-                $controller = new ControllerResolver();
-                $controller->resolveController(
+                $routingFunc = new ControllerResolver();
+                $routingFunc->resolveController(
                     $this->getControllerClassMethod($routeProps['controller'])['class'],
                     $this->getControllerClassMethod($routeProps['controller'])['method']
                     );

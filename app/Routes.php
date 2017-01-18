@@ -12,8 +12,8 @@ $route = new Router('/Email_Scraper');
 /**
  * Specify App Routes
  */
-$route->route('/esomar', 'GET', 'EmailExtract@extractEmail');
-$route->route('/greenbook', 'GET', 'EmailExtract@extractC');
+$route->route('/esomar', 'GET', 'EmailExtract@extractC');
+$route->route('/greenbook', 'GET', 'EmailExtract@makeMeHappy');
 
 /**
  * Make the routes accessible
